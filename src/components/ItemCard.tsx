@@ -50,7 +50,7 @@ export const ItemCard: React.FC<Card> = ({ item, scrollY, index }) => {
           />
           <Animated.Text
             sharedTransitionTag={`image-${item.id}`}
-            style={{ display: "none" }}
+            style={{ color: "white", fontSize: 1 }}
           >
             Hello
           </Animated.Text>

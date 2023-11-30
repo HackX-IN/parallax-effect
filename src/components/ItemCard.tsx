@@ -1,17 +1,16 @@
-import { Dimensions, TouchableOpacity, View, StyleSheet } from "react-native";
+import { Dimensions, View, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Animated, {
-  Extrapolate,
   SharedValue,
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { Image } from "expo-image";
+
 import { useNavigation } from "@react-navigation/core";
 
 interface Props {
   id?: number;
-  image?: any;
+  image?: string;
 }
 
 interface Card {
@@ -20,79 +19,75 @@ interface Card {
   scrollY: SharedValue<number>;
 }
 const { width, height } = Dimensions.get("screen");
+const ITEM_WIDTH = height * 0.36;
+const ITEM_HEIGHT = ITEM_WIDTH * 1.6;
 
-export const ItemCard: React.FC<Card> = ({ item, index, scrollY }) => {
+export const ItemCard: React.FC<Card> = ({ item, scrollY, index }) => {
   const navigation = useNavigation<any>();
-  const inputRange = [
-    (index - 1) * height,
-    index * height,
-    (index + 1) * height,
-  ];
+  const Input = [(index - 1) * height, index * height, (index + 1) * height];
+
   const animatedStyle = useAnimatedStyle(() => {
+    const translateY = interpolate(scrollY.value, Input, [
+      -height * 0.2,
+      0,
+      height * 0.4,
+    ]);
+
     return {
-      transform: [
-        {
-          translateY: interpolate(
-            scrollY.value,
-            inputRange,
-            [-90, 0, 60],
-            Extrapolate.CLAMP
-          ),
-        },
-      ],
+      transform: [{ translateY: translateY }],
     };
   });
-  const AnimatedImage = Animated.createAnimatedComponent(Image);
   return (
     <View style={styles.item}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("id", { item: item.id })}
-        style={{
-          width: width * 0.9,
-          height: height * 0.7,
-          overflow: "hidden",
-          alignItems: "center",
-          borderRadius: 16,
-        }}
-      >
-        <AnimatedImage
-          source={item.image}
-          style={[styles.image, animatedStyle]}
-        />
-        <Animated.Text
-          sharedTransitionTag={`image-${item.id}`}
-          style={{ display: "none" }}
+      <View style={styles.shadow}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("id", { item: item.id })}
+          style={styles.cover_image}
         >
-          hello
-        </Animated.Text>
-      </TouchableOpacity>
+          <Animated.Image
+            source={{ uri: item?.image }}
+            style={[styles.image, animatedStyle]}
+          />
+          <Animated.Text
+            sharedTransitionTag={`image-${item.id}`}
+            style={{ display: "none" }}
+          >
+            Hello
+          </Animated.Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   item: {
+    width: width,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 8,
+    height: height * 0.7,
   },
   image: {
-    width: width * 0.9,
-    height: height * 0.65,
-    borderRadius: 30,
+    width: ITEM_WIDTH * 1.6,
+    height: ITEM_HEIGHT * 1.5,
+  },
+  cover_image: {
+    width: ITEM_WIDTH,
+    height: ITEM_HEIGHT,
+    overflow: "hidden",
+    alignItems: "center",
+    borderRadius: 14,
   },
   shadow: {
-    borderRadius: 30,
+    borderRadius: 18,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 0,
     },
-    shadowRadius: 20,
-    shadowOpacity: 0.6,
-    elevation: 20,
+    shadowRadius: 50,
+    shadowOpacity: 1,
+    elevation: 5,
     backgroundColor: "#ffff",
-    marginBottom: 16,
-    height: height * 0.7,
   },
 });

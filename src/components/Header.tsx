@@ -1,6 +1,7 @@
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
+import Animated, { Easing, FadeInUp } from "react-native-reanimated";
 
 export const Header = ({
   color,
@@ -11,19 +12,26 @@ export const Header = ({
 }) => {
   return (
     <View style={[styles.header, { backgroundColor: color ? color : "#fff" }]}>
-      <Image
-        src="https://cdn-icons-png.flaticon.com/128/9652/9652559.png"
+      <Animated.Image
+        entering={FadeInUp.easing(Easing.linear).delay(100)}
+        source={{
+          uri: "https://cdn-icons-png.flaticon.com/128/9652/9652559.png",
+        }}
         style={[styles.image, { tintColor: iconColor ? iconColor : "#0E86D4" }]}
       />
-      <Image
-        src="https://cdn-icons-png.flaticon.com/128/1/1443.png"
+      <Animated.Image
+        entering={FadeInUp.easing(Easing.linear).delay(120)}
+        source={{ uri: "https://cdn-icons-png.flaticon.com/128/1/1443.png" }}
         style={[
           styles.psLogo,
           { tintColor: iconColor ? iconColor : "#0E86D4" },
         ]}
       />
 
-      <View style={{ flexDirection: "row", gap: 8, alignItems: "center" }}>
+      <Animated.View
+        style={{ flexDirection: "row", gap: 8, alignItems: "center" }}
+        entering={FadeInUp.easing(Easing.linear).delay(100)}
+      >
         <Ionicons
           name="cart"
           color={iconColor ? iconColor : "#0E86D4"}
@@ -34,7 +42,7 @@ export const Header = ({
           color={iconColor ? iconColor : "#0E86D4"}
           size={26}
         />
-      </View>
+      </Animated.View>
     </View>
   );
 };

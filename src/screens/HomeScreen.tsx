@@ -1,14 +1,20 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Header } from "@/src/components/Header";
-import { ItemCard } from "@/src/components/ItemCard";
-import { Data, DataItem } from "@/src/data/Data";
+import * as React from "react";
+import { View, StyleSheet, Text } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { DataItem, images } from "../data/Data";
+import { ItemCard } from "../components/ItemCard";
 import Animated, {
-  useSharedValue,
   useAnimatedScrollHandler,
+  useSharedValue,
 } from "react-native-reanimated";
+import { Header } from "../components/Header";
 
-const HomeScreen: React.FC = () => {
+const data: DataItem[] = images.map((item) => ({
+  id: item.id,
+  image: item.image,
+}));
+
+export default function App() {
   const scrollY = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler({
@@ -19,10 +25,9 @@ const HomeScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="white" translucent={false} />
       <Header color="white" iconColor="#0E86D4" />
-
       <Animated.FlatList
-        data={Data}
         ListHeaderComponent={() => (
           <View style={styles.headerTitle}>
             <Text
@@ -43,23 +48,25 @@ const HomeScreen: React.FC = () => {
             </Text>
           </View>
         )}
-        renderItem={({ item, index }: { item: DataItem; index: number }) => (
-          <ItemCard item={item} index={index} scrollY={scrollY} />
-        )}
-        contentContainerStyle={{ paddingBottom: 80, paddingTop: 18 }}
-        keyExtractor={(item) => item.id.toString()}
+        data={data}
+        pagingEnabled
         onScroll={scrollHandler}
+        bounces={false}
+        scrollEventThrottle={16}
+        renderItem={({ item, index }) => {
+          return <ItemCard item={item} index={index} scrollY={scrollY} />;
+        }}
       />
     </View>
   );
-};
-
-export default HomeScreen;
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   headerTitle: {
     alignItems: "center",

@@ -15,13 +15,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.inam786.parralaxpsp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.inam786.parralaxpsp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -29,6 +31,11 @@
     "experiments": {
       "typedRoutes": true,
       "tsconfigPaths": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "13ca7144-a899-44c3-853e-b9fef0793013"
+      }
     }
   }
 }

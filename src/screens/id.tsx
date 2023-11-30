@@ -1,24 +1,30 @@
-import { Dimensions, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import React from "react";
-import { Data } from "../data/Data";
 import { Header } from "../components/Header";
 import Animated from "react-native-reanimated";
+import { images } from "../data/Data";
+
 const { height } = Dimensions.get("window");
+
 const SingleScreen = ({ route }: { route: any }) => {
   const { item: photo } = route.params;
   console.log(photo);
-  const listing = Data.find((item) => item.id === photo);
+  const listing = images.find((item) => item.id === photo);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#000" }}>
+    <View style={styles.container}>
       <Header color="#000" iconColor="#fff" />
       <Animated.Image
-        source={listing.image}
-        style={{ width: "100%", height: height * 0.9, alignSelf: "center" }}
+        source={{ uri: listing.image }}
+        style={styles.image}
         sharedTransitionTag={`image-${photo}`}
-        resizeMode={"contain"}
       />
     </View>
   );
 };
 export default SingleScreen;
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#000" },
+  image: { width: "100%", height: height * 0.9, alignSelf: "center" },
+});

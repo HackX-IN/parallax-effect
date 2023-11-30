@@ -1,18 +1,10 @@
-import {
-  Dimensions,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  Text,
-} from "react-native";
+import { Dimensions, TouchableOpacity, View, StyleSheet } from "react-native";
 import React from "react";
 import Animated, {
   Extrapolate,
   SharedValue,
   interpolate,
   useAnimatedStyle,
-  withSpring,
-  withTiming,
 } from "react-native-reanimated";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/core";
@@ -43,7 +35,7 @@ export const ItemCard: React.FC<Card> = ({ item, index, scrollY }) => {
           translateY: interpolate(
             scrollY.value,
             inputRange,
-            [-80, 0, 30],
+            [-90, 0, 60],
             Extrapolate.CLAMP
           ),
         },
@@ -57,7 +49,7 @@ export const ItemCard: React.FC<Card> = ({ item, index, scrollY }) => {
         onPress={() => navigation.navigate("id", { item: item.id })}
         style={{
           width: width * 0.9,
-          height: height * 0.75,
+          height: height * 0.7,
           overflow: "hidden",
           alignItems: "center",
           borderRadius: 16,
@@ -86,11 +78,11 @@ const styles = StyleSheet.create({
   },
   image: {
     width: width * 0.9,
-    height: height * 0.7,
+    height: height * 0.65,
     borderRadius: 30,
   },
   shadow: {
-    borderRadius: 18,
+    borderRadius: 30,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -101,5 +93,6 @@ const styles = StyleSheet.create({
     elevation: 20,
     backgroundColor: "#ffff",
     marginBottom: 16,
+    height: height * 0.7,
   },
 });

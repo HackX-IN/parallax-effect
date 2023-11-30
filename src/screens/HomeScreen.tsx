@@ -20,26 +20,29 @@ const HomeScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Header color="white" iconColor="#0E86D4" />
-      <View style={styles.headerTitle}>
-        <Text
-          style={[
-            styles.text,
-            { color: "#0E86D4", fontSize: 12, fontWeight: "700" },
-          ]}
-        >
-          GREAT GAMES
-        </Text>
-        <Text
-          style={[
-            styles.text,
-            { color: "#000", fontSize: 20, fontWeight: "400" },
-          ]}
-        >
-          Coming Soon
-        </Text>
-      </View>
+
       <Animated.FlatList
         data={Data}
+        ListHeaderComponent={() => (
+          <View style={styles.headerTitle}>
+            <Text
+              style={[
+                styles.text,
+                { color: "#0E86D4", fontSize: 12, fontWeight: "700" },
+              ]}
+            >
+              GREAT GAMES
+            </Text>
+            <Text
+              style={[
+                styles.text,
+                { color: "#000", fontSize: 20, fontWeight: "400" },
+              ]}
+            >
+              Coming Soon
+            </Text>
+          </View>
+        )}
         renderItem={({ item, index }: { item: DataItem; index: number }) => (
           <ItemCard item={item} index={index} scrollY={scrollY} />
         )}
@@ -61,7 +64,8 @@ const styles = StyleSheet.create({
   headerTitle: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 12,
+    marginTop: 6,
+    marginBottom: 8,
   },
   text: {
     textAlign: "center",

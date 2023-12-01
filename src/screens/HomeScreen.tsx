@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 6,
-    marginBottom: 8,
   },
   text: {
     textAlign: "center",

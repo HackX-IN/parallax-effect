@@ -13,14 +13,14 @@ export const Header = ({
   return (
     <View style={[styles.header, { backgroundColor: color ? color : "#fff" }]}>
       <Animated.Image
-        entering={FadeInUp.easing(Easing.linear).delay(100)}
+        entering={FadeInUp.easing(Easing.linear).delay(160).springify()}
         source={{
           uri: "https://cdn-icons-png.flaticon.com/128/9652/9652559.png",
         }}
         style={[styles.image, { tintColor: iconColor ? iconColor : "#0E86D4" }]}
       />
       <Animated.Image
-        entering={FadeInUp.easing(Easing.linear).delay(120)}
+        entering={FadeInUp.easing(Easing.linear).delay(180).springify()}
         source={{ uri: "https://cdn-icons-png.flaticon.com/128/1/1443.png" }}
         style={[
           styles.psLogo,
@@ -30,7 +30,7 @@ export const Header = ({
 
       <Animated.View
         style={{ flexDirection: "row", gap: 8, alignItems: "center" }}
-        entering={FadeInUp.easing(Easing.linear).delay(100)}
+        entering={FadeInUp.easing(Easing.linear).delay(160).springify()}
       >
         <Ionicons
           name="cart"

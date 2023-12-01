@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import { Header } from "../components/Header";
-import Animated from "react-native-reanimated";
+import Animated, { Easing, FadeInDown } from "react-native-reanimated";
 import { images } from "../data/Data";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
@@ -44,26 +44,43 @@ const SingleScreen = ({ route }: { route: any }) => {
       />
 
       <View style={styles.actionRow}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.navigate}
+        <Animated.View
+          style={{ zIndex: 2 }}
+          entering={FadeInDown.delay(200)
+            .easing(Easing.linear)
+            .damping(120)
+            .springify()}
         >
-          <Ionicons name="chevron-back" size={29} color={"white"} />
-          <Text style={styles.back}>Back</Text>
-        </TouchableOpacity>
-        <View>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.navigate}
+          >
+            <Ionicons name="chevron-back" size={29} color={"white"} />
+            <Text style={styles.back}>Back</Text>
+          </TouchableOpacity>
+        </Animated.View>
+        <Animated.View
+          entering={FadeInDown.delay(200)
+            .easing(Easing.linear)
+            .damping(120)
+            .springify()}
+        >
           <Image
             source={{
               uri: "https://cdn-icons-png.flaticon.com/128/4315/4315512.png",
             }}
             style={styles.icon}
           />
-        </View>
+        </Animated.View>
       </View>
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.text}>Pre-order Now</Text>
-      </TouchableOpacity>
+      <Animated.View
+        entering={FadeInDown.delay(220).easing(Easing.linear).springify()}
+      >
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.text}>Pre-order Now</Text>
+        </TouchableOpacity>
+      </Animated.View>
     </View>
   );
 };
@@ -129,6 +146,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
-    zIndex: 2,
   },
 });

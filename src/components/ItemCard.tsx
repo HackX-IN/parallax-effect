@@ -18,7 +18,7 @@ interface Card {
   index: number;
   scrollY: SharedValue<number>;
 }
-const { width, height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("window");
 const ITEM_WIDTH = height * 0.36;
 const ITEM_HEIGHT = ITEM_WIDTH * 1.6;
 
@@ -28,9 +28,9 @@ export const ItemCard: React.FC<Card> = ({ item, scrollY, index }) => {
 
   const animatedStyle = useAnimatedStyle(() => {
     const translateY = interpolate(scrollY.value, Input, [
-      -height * 0.2,
+      -height * 0.14,
       0,
-      height * 0.4,
+      height * 0.25,
     ]);
 
     return {
@@ -42,11 +42,16 @@ export const ItemCard: React.FC<Card> = ({ item, scrollY, index }) => {
       <View style={styles.shadow}>
         <TouchableOpacity
           onPress={() => navigation.navigate("id", { item: item.id })}
-          style={styles.cover_image}
+          style={[
+            styles.cover_image,
+            { height: item.id === 5 ? ITEM_HEIGHT * 0.78 : ITEM_HEIGHT * 0.88 },
+          ]}
         >
           <Animated.Image
             source={{ uri: item?.image }}
             style={[styles.image, animatedStyle]}
+            resizeMethod={"auto"}
+            resizeMode={"stretch"}
           />
           <Animated.Text
             sharedTransitionTag={`image-${item.id}`}
@@ -68,12 +73,12 @@ const styles = StyleSheet.create({
     height: height * 0.7,
   },
   image: {
-    width: ITEM_WIDTH * 1.6,
-    height: ITEM_HEIGHT * 1.5,
+    width: ITEM_WIDTH,
+    height: ITEM_HEIGHT * 1.3,
   },
   cover_image: {
-    width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
+    width: ITEM_WIDTH * 1,
+    // height: ITEM_HEIGHT * 0.98,
     overflow: "hidden",
     alignItems: "center",
     borderRadius: 14,
